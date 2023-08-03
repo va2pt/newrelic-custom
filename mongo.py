@@ -56,9 +56,9 @@ def run_bash_command(command):
         if result.returncode == 0:
             return result.stdout.strip()
         else:
-            return f"Error occurred: {result.stderr.strip()}"
+            return "Error occurred:" +{result.stderr.strip()}
     except Exception as e:
-        return f"Error occurred: {str(e)}"
+        return "Error occurred:" +{str(e)}
 
 def find_ip_addresses(input_string):
     # Define a regular expression pattern for finding IP addresses
