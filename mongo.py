@@ -5,6 +5,7 @@ import json
 import random
 import time
 import sys
+import subprocess
 
 # Replace with your New Relic Insights Insert API key
 INSIGHTS_INSERT_API_KEY = "c9e1b2c28fb2917569084e208844c856FFFFNRAL"
@@ -49,7 +50,15 @@ def send_custom_metric_to_new_relic(metric_name, value, timestamp=None):
 ## Sample NRQL
 ## SELECT median(metricValue) from CustomMetric where metricName = 'VA2PT/MySQL'  TIMESERIES 1 minute
 
-
+def run_bash_command(command):
+    try:
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+        if result.returncode == 0:
+            return result.stdout.strip()
+        else:
+            return f"Error occurred: {result.stderr.strip()}"
+    except Exception as e:
+        return f"Error occurred: {str(e)}"
 
 def find_ip_addresses(input_string):
     # Define a regular expression pattern for finding IP addresses
@@ -85,7 +94,8 @@ def find_first_digits(input_string):
 # 	syncedTo: Thu Aug 03 2023 06:18:28 GMT+0000 (UTC)
 # 	1 secs (0 hrs) behind the primary"""
 
-mongo_data = sys.argv[2]
+bash_command = "bash get_mongo_rep_data.sh"
+mongo_data = run_bash_command(bash_command)
 
 mongo_servers = {}
 lag = ""
