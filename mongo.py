@@ -12,7 +12,7 @@ INSIGHTS_INSERT_API_KEY = "c9e1b2c28fb2917569084e208844c856FFFFNRAL"
 # Replace with your New Relic account ID
 NEW_RELIC_ACCOUNT_ID = "3894757"
 
-INSIGHTS_INSERT_URL = f"https://insights-collector.newrelic.com/v1/accounts/{NEW_RELIC_ACCOUNT_ID}/events"
+INSIGHTS_INSERT_URL = "https://insights-collector.newrelic.com/v1/accounts/"+NEW_RELIC_ACCOUNT_ID+"/events"
 
 def send_custom_metric_to_new_relic(metric_name, value, timestamp=None):
     event = {
