@@ -30,9 +30,9 @@ def send_custom_metric_to_new_relic(metric_name, value, timestamp=None):
     try:
         response = requests.post(INSIGHTS_INSERT_URL, headers=headers, data=json.dumps(event))
         response.raise_for_status()
-        print(f"Custom metric sent: {metric_name}={value}")
+        print("Custom metric sent:" +{metric_name}+"="+{value})
     except requests.exceptions.RequestException as e:
-        print(f"Error sending custom metric: {e}")
+        print("Error sending custom metric:" +{e})
 
 # Example usage:
 # Replace 'YOUR_METRIC_NAME' and 'YOUR_METRIC_VALUE' with your desired metric name and value
