@@ -11,7 +11,7 @@ for container_id in $container_ids; do
     container_ip=$(docker inspect --format '{{ .NetworkSettings.Networks.'$NETWORK_NAME'.IPAddress }}' $container_id)
 
     # Define the port
-    port=80  # Change to the appropriate port
+    port=27017  # Change to the appropriate port
 
     # Curl a generic URL in the current container
     curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port")
