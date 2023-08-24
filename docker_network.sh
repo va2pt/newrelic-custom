@@ -13,11 +13,18 @@ for container_id in $container_ids; do
     # Define the port
     port=27017  # Change to the appropriate port
 
-    # Curl a generic URL in the current container
-    curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port")
+    # Try to curl a generic URL in the current container
+    curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port" 2>&1)
 
-    # Print the container ID and curl result
-    echo "Container $container_id:"
-    echo "$curl_result"
+    # Check if the curl command failed
+    if [ $? -ne 0 ]; then
+        # Handle the error
+        echo "Error: Could not connect to http://$container_ip:$port in Container $container_id"
+    else
+        # Print the container ID and curl result
+        echo "Container $container_id:"
+        echo "$curl_result"
+    fi
+
     echo
 done
