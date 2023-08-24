@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NETWORK_NAME="mynetwork"
+NETWORK_NAME="bridge"
 
 # Get a list of all container IDs in the specified network
 container_ids=$(docker network inspect --format='{{range $id, $c := .Containers}}{{$id}} {{end}}' "$NETWORK_NAME")
