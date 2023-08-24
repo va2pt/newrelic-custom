@@ -15,7 +15,7 @@ for container_id in $container_ids; do
     #endpoint="/path/to/your/endpoint"  # Change to the appropriate endpoint
 
     # Curl the endpoint in the current container
-    curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port$endpoint")
+    curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port")
 
     # Print the container ID and curl result
     echo "Container $container_id:"
