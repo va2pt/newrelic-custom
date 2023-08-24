@@ -16,5 +16,5 @@ for ip_port in $ip_port_list; do
 done
 
 # Count MongoDB processes
-mongo_process_count=$(echo "$lsof_output" | grep "mongod" | wc -l)
+mongo_process_count=$(echo "$lsof_output" | grep -w "mongod" | wc -l)
 echo "Number of MongoDB processes: $mongo_process_count"
