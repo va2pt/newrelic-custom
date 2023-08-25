@@ -34,4 +34,7 @@ mongo_process_count=$(echo "$netstat_output" | grep -w "mongod" | wc -l)
 
 ## Combine Output
 combined_count=$((total_count + mongo_process_count))
-echo "Number of MongoDB processes on the host: $combined_count"
+echo "Number of MongoDB processes on the host: $mongo_process_count"
+
+combined_count=$((total_count + mongo_process_count))
+echo "Number of MongoDB processes on this machine are: $combined_count"
