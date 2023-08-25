@@ -16,8 +16,11 @@ for container_id in $container_ids; do
     # Try to curl a generic URL in the current container and capture the output
     curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port" 2>/dev/null || true)
 
-    # Print the container ID and curl result
-    echo "Container $container_id:"
-    echo "$curl_result"
-    echo
+    # Check if the curl_result indicates MongoDB over HTTP
+    if echo "$curl_result" | grep -q "HTTP/1.1 400 Bad Request" && echo "$curl_result" | grep -q "MongoDB over HTTP"; then
+        # Print the container ID and the curl result indicating MongoDB over HTTP
+        echo "Container $container_id:"
+        echo "$curl_result"
+        echo
+    fi
 done
