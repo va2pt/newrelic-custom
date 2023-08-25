@@ -1,6 +1,7 @@
 #!/bin/bash
 
 NETWORK_NAME="bridge"
+total_count=0
 
 # Get a list of all container IDs in the specified network
 container_ids=$(docker network inspect --format='{{range $id, $c := .Containers}}{{$id}} {{end}}' "$NETWORK_NAME")
@@ -17,10 +18,10 @@ for container_id in $container_ids; do
     curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port" 2>/dev/null || true)
 
     # Check if the curl_result indicates MongoDB over HTTP
-    if echo "$curl_result" | grep -q "HTTP/1.1 400 Bad Request" && echo "$curl_result" | grep -q "MongoDB over HTTP"; then
-        # Print the container ID and the curl result indicating MongoDB over HTTP
-        echo "Container $container_id:"
-        echo "$curl_result"
-        echo
+    if echo "$curl_result" | grep -q "MongoDB over HTTP"; then
+        total_count=$((total_count + 1))
     fi
 done
+
+# Print the total count
+echo "Total count of MongoDB over HTTP requests: $total_count"
