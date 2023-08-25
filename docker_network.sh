@@ -14,7 +14,7 @@ for container_id in $container_ids; do
     port=27017  # Change to the appropriate port
 
     # Try to curl a generic URL in the current container and capture the output
-    curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port" 2>/dev/null)
+    curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port" 2>/dev/null || true)
 
     # Print the container ID and curl result
     echo "Container $container_id:"
