@@ -3,6 +3,9 @@
 NETWORK_NAME="bridge"
 total_count=0
 
+# Get the host IP address
+host_ip=$(hostname -I | awk '{print $1}')
+
 # Get a list of all container IDs in the specified network
 container_ids=$(docker network inspect --format='{{range $id, $c := .Containers}}{{$id}} {{end}}' "$NETWORK_NAME")
 
@@ -33,8 +36,6 @@ netstat_output=$(sudo netstat -putan | grep LISTEN)
 mongo_process_count=$(echo "$netstat_output" | grep -w "mongod" | wc -l)
 
 ## Combine Output
-combined_count=$((total_count + mongo_process_count))
-echo "Number of MongoDB processes on the host: $mongo_process_count"
 
 combined_count=$((total_count + mongo_process_count))
-echo "Number of MongoDB processes on this machine are: $combined_count"
+echo "$host_ip:$combined_count"
