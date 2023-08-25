@@ -26,9 +26,6 @@ for container_id in $container_ids; do
     fi
 done
 
-# Print the total count
-echo "Total count of MongoDB over HTTP requests from Docker containers: $total_count"
-
 # Run lsof to get a list of processes and ports
 netstat_output=$(sudo netstat -putan | grep LISTEN)
 
