@@ -3,6 +3,9 @@
 NETWORK_NAME="bridge"
 total_count=0
 
+# Get the host IP address
+host_ip=$(hostname -I | awk '{print $1}')
+
 # Get a list of all container IDs in the specified network
 container_ids=$(docker network inspect --format='{{range $id, $c := .Containers}}{{$id}} {{end}}' "$NETWORK_NAME")
 
@@ -24,4 +27,4 @@ for container_id in $container_ids; do
 done
 
 # Print the total count
-echo "Total count of MongoDB over HTTP requests: $total_count"
+echo "$host_ip: $total_count"
