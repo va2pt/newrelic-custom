@@ -31,4 +31,7 @@ netstat_output=$(sudo netstat -putan | grep LISTEN)
 
 # Count MongoDB processes on the host
 mongo_process_count=$(echo "$netstat_output" | grep -w "mongod" | wc -l)
-echo "Number of MongoDB processes on the host: $mongo_process_count"
+
+## Combine Output
+combined_count=$((total_count + mongo_process_count))
+echo "Number of MongoDB processes on the host: $combined_count"
