@@ -18,7 +18,7 @@ for container_id in $container_ids; do
     curl_result=$(docker exec $container_id curl -s "http://$container_ip:$port" 2>/dev/null || true)
 
     # Check if the curl_result indicates MongoDB over HTTP
-    if echo "$curl_result" | grep -q "HTTP/1.1 400 Bad Request" && echo "$curl_result" | grep -q "MongoDB over HTTP"; then
+    if echo "$curl_result" | grep -q "MongoDB over HTTP"; then
         total_count=$((total_count + 1))
     fi
 done
