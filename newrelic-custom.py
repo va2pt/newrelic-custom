@@ -4,6 +4,7 @@ import json
 import random
 import time
 import sys
+from curl import get_metric
 
 # Replace with your New Relic Insights Insert API key
 INSIGHTS_INSERT_API_KEY = "c9e1b2c28fb2917569084e208844c856FFFFNRAL"
@@ -14,7 +15,7 @@ INSIGHTS_INSERT_URL = f"https://insights-collector.newrelic.com/v1/accounts/{NEW
 
 def send_custom_metric_to_new_relic(metric_name, value, timestamp=None):
     event = {
-        "eventType": "CustomMetric",
+        "eventType": "Mongo_status",
         "timestamp": timestamp or int(time.time() * 1000),  # Convert to milliseconds
         "metricName": metric_name,
         "metricValue": value
@@ -40,9 +41,7 @@ def send_custom_metric_to_new_relic(metric_name, value, timestamp=None):
 # for x in range(1, 10000):
 #     send_custom_metric_to_new_relic("VA2PT/MySQL", random.randrange(10, 99))
 #     time.sleep(1)
-
-send_custom_metric_to_new_relic(sys.argv[1], sys.argv[2])
-# python script_name metric_name value
-# python send_custom_metrics_to_newrelic.py VA2PT/MySQL 99
-## Sample NRQL
-## SELECT median(metricValue) from CustomMetric where metricName = 'VA2PT/MySQL'  TIMESERIES 1 minute
+# Linux command to run in the background
+command = "netstat -tulpn | awk '{print $4}' | xargs curl -s | grep -i 'MongoDB' | wc -l" 
+value = get_metric(command)
+send_custom_metric_to_new_relic('va2pt/mongo_status',value)
